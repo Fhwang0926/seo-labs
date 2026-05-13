@@ -43,7 +43,7 @@
 - **유형**: React Server Components 역직렬화 취약점
 - **대상**: Next.js (React Server Components)
 - **공격 방식**: 서버 액션을 통한 명령 실행
-- **상세**: [`CVE-2025-55182/Readme.md`](CVE-2025-55182/Readme.md)
+- **상세**: [`CVE-2025-55182/README.md`](CVE-2025-55182/README.md)
 
 ---
 
@@ -88,15 +88,15 @@ seo-labs/
 │   └── victim/
 │       ├── Dockerfile
 │       └── src/
-└── CVE-2025-55182/              # React2Shell
-    ├── Readme.md
-    ├── docker-compose.yml
-    ├── attacker/
-    │   ├── Dockerfile
-    │   └── exploit.py
-    └── victim/
-        ├── Dockerfile
-        └── app/
+├── CVE-2025-55182/              # React2Shell
+│   ├── README.md
+│   ├── docker-compose.yml
+│   ├── attacker/
+│   │   ├── Dockerfile
+│   │   └── exploit.py
+│   └── victim/
+│       ├── Dockerfile
+│       └── app/
 ```
 
 ---
@@ -134,7 +134,7 @@ seo-labs/
 - [`CVE-2017-5638/README.md`](CVE-2017-5638/README.md) - Apache Struts 2
 - [`CVE-2021-44228/README.md`](CVE-2021-44228/README.md) - Log4Shell
 - [`CVE-2022-22965/README.md`](CVE-2022-22965/README.md) - Spring4Shell
-- [`CVE-2025-55182/Readme.md`](CVE-2025-55182/Readme.md) - React2Shell
+- [`CVE-2025-55182/README.md`](CVE-2025-55182/README.md) - React2Shell
 
 ---
 
@@ -241,6 +241,7 @@ seo-labs/
 - [CVE-2017-5638](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5638)
 - [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228)
 - [CVE-2022-22965](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-22965)
+- [CVE-2025-55182](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-55182)
 
 ### 관련 문서
 - 각 취약점 폴더의 `README.md` 파일
