@@ -45,6 +45,46 @@
 - **공격 방식**: 서버 액션을 통한 명령 실행
 - **상세**: [`CVE-2025-55182/README.md`](CVE-2025-55182/README.md)
 
+### 6. **CVE-2017-12615 (Apache Tomcat PUT)**
+- **구성**: Victim(취약 Tomcat) + Attacker(자동 익스플로잇) 컨테이너
+- **심각도**: Critical
+- **유형**: HTTP PUT 기반 임의 파일 쓰기(JSP 확장자 우회)
+- **대상**: Apache Tomcat 8.5.19(교육용 `readonly=false`)
+- **공격 방식**: PUT 업로드 후 JSP 실행
+- **상세**: [`CVE-2017-12615/README.md`](CVE-2017-12615/README.md) · Vulhub 출처: [`VULHUB-ATTRIBUTION.md`](VULHUB-ATTRIBUTION.md)
+
+### 7. **CVE-2022-22963 (Spring Cloud Function SpEL)**
+- **구성**: Victim(Spring Cloud Function) + Attacker(자동 익스플로잇) 컨테이너
+- **심각도**: Critical
+- **유형**: SpEL 라우팅 표현식 주입
+- **대상**: Spring Cloud Function 3.2.2
+- **공격 방식**: `spring.cloud.function.routing-expression` 헤더로 `Runtime.exec` 유도
+- **상세**: [`CVE-2022-22963/README.md`](CVE-2022-22963/README.md) · Vulhub 출처: [`VULHUB-ATTRIBUTION.md`](VULHUB-ATTRIBUTION.md)
+
+### 8. **CVE-2018-20062 (ThinkPHP 5.0.23 RCE)**
+- **구성**: Victim(ThinkPHP 앱) + Attacker(자동 익스플로잇) 컨테이너
+- **심각도**: Critical
+- **유형**: Request 클래스 조작·명령 실행
+- **대상**: ThinkPHP 5.0.23
+- **공격 방식**: `_method` / `filter[]` 체인으로 `system` 호출
+- **상세**: [`CVE-2018-20062/README.md`](CVE-2018-20062/README.md) · Vulhub 출처: [`VULHUB-ATTRIBUTION.md`](VULHUB-ATTRIBUTION.md)
+
+### 9. **CVE-2017-18349 (Fastjson 1.2.24 JNDI)**
+- **구성**: Victim(Fastjson 앱) + Attacker(Marshalsec·HTTP·JSON 페이로드) 컨테이너
+- **심각도**: Critical
+- **유형**: autoType·JdbcRowSetImpl·JNDI RMI
+- **대상**: Fastjson 1.2.24
+- **공격 방식**: RMI로 원격 클래스 로드 후 마커 파일 생성
+- **상세**: [`CVE-2017-18349/README.md`](CVE-2017-18349/README.md) · Vulhub: [`docs/VULHUB-PORTING-CHECKLIST.md`](docs/VULHUB-PORTING-CHECKLIST.md)
+
+### 10. **CVE-2018-7490 (uWSGI PHP 경로 순회)**
+- **구성**: Victim(uWSGI+PHP) + Attacker(GET 순회) 컨테이너
+- **심각도**: High
+- **유형**: DOCUMENT_ROOT 우회·경로 순회
+- **대상**: uWSGI PHP 플러그인 2.0.16
+- **공격 방식**: `..%2f` 누적로 `/etc/passwd` 등 읽기
+- **상세**: [`CVE-2018-7490/README.md`](CVE-2018-7490/README.md) · Vulhub: [`docs/VULHUB-PORTING-CHECKLIST.md`](docs/VULHUB-PORTING-CHECKLIST.md)
+
 ---
 
 ## 🏗 프로젝트 구조
@@ -52,6 +92,10 @@
 ```
 seo-labs/
 ├── README.md                    # 이 파일 (전체 프로젝트 개요)
+├── VULHUB-ATTRIBUTION.md        # Vulhub 참고 시나리오 출처·MIT 라이선스 안내
+├── docs/
+│   └── VULHUB-PORTING-CHECKLIST.md  # Vulhub 이식 마스터 표·절차
+├── templates/                   # README 등 템플릿
 ├── CVE-2014-6271/               # Shellshock
 │   ├── README.md
 │   ├── docker-compose.yml
@@ -61,7 +105,40 @@ seo-labs/
 │   └── victim/
 │       ├── Dockerfile
 │       └── test.cgi
-├── CVE-2017-5638/               # Apache Struts 2
+├── CVE-2017-5638/               # Apache Struts 2 (S2-045)
+│   ├── README.md
+│   ├── docker-compose.yml
+│   ├── attacker/
+│   │   ├── Dockerfile
+│   │   └── exploit.py
+│   └── victim/
+│       └── Dockerfile
+├── CVE-2017-12615/              # Tomcat PUT (Vulhub 기반)
+│   ├── README.md
+│   ├── docker-compose.yml
+│   ├── attacker/
+│   │   ├── Dockerfile
+│   │   └── exploit.py
+│   └── victim/
+│       └── Dockerfile
+├── CVE-2018-20062/              # ThinkPHP 5.0.23 (Vulhub 기반)
+│   ├── README.md
+│   ├── docker-compose.yml
+│   ├── attacker/
+│   │   ├── Dockerfile
+│   │   └── exploit.py
+│   └── victim/
+│       └── Dockerfile
+├── CVE-2017-18349/              # Fastjson 1.2.24 JNDI (Vulhub 기반)
+│   ├── README.md
+│   ├── docker-compose.yml
+│   ├── attacker/
+│   │   ├── Dockerfile
+│   │   ├── exploit.py
+│   │   └── TouchFile.java
+│   └── victim/
+│       └── Dockerfile
+├── CVE-2018-7490/               # uWSGI path traversal (Vulhub 기반)
 │   ├── README.md
 │   ├── docker-compose.yml
 │   ├── attacker/
@@ -88,6 +165,14 @@ seo-labs/
 │   └── victim/
 │       ├── Dockerfile
 │       └── src/
+├── CVE-2022-22963/              # Spring Cloud Function SpEL (Vulhub 기반)
+│   ├── README.md
+│   ├── docker-compose.yml
+│   ├── attacker/
+│   │   ├── Dockerfile
+│   │   └── exploit.py
+│   └── victim/
+│       └── Dockerfile
 ├── CVE-2025-55182/              # React2Shell
 │   ├── README.md
 │   ├── docker-compose.yml
@@ -135,6 +220,13 @@ seo-labs/
 - [`CVE-2021-44228/README.md`](CVE-2021-44228/README.md) - Log4Shell
 - [`CVE-2022-22965/README.md`](CVE-2022-22965/README.md) - Spring4Shell
 - [`CVE-2025-55182/README.md`](CVE-2025-55182/README.md) - React2Shell
+- [`CVE-2017-12615/README.md`](CVE-2017-12615/README.md) - Tomcat PUT
+- [`CVE-2022-22963/README.md`](CVE-2022-22963/README.md) - Spring Cloud Function SpEL
+- [`CVE-2018-20062/README.md`](CVE-2018-20062/README.md) - ThinkPHP RCE
+- [`CVE-2017-18349/README.md`](CVE-2017-18349/README.md) - Fastjson 1.2.24 JNDI
+- [`CVE-2018-7490/README.md`](CVE-2018-7490/README.md) - uWSGI 경로 순회
+- [`VULHUB-ATTRIBUTION.md`](VULHUB-ATTRIBUTION.md) - Vulhub 기반 시나리오 출처
+- [`docs/VULHUB-PORTING-CHECKLIST.md`](docs/VULHUB-PORTING-CHECKLIST.md) - Vulhub 이식 마스터 체크리스트
 
 ---
 
@@ -152,8 +244,11 @@ seo-labs/
 - 컨테이너 시작 시 자동으로 공격 시도
 - Victim 서비스가 준비될 때까지 대기 후 공격 실행
 
+Vulhub에서 이식한 시나리오(CVE-2017-12615, CVE-2022-22963, CVE-2018-20062)도 동일하게 **`victim/`**·**`attacker/`** 디렉터리와 Compose 서비스명 **`victim`**, **`attacker`** 로 구성됩니다.
+
 ### 3. **네트워크 격리**
-- 모든 컨테이너는 `cyber_range` 브리지 네트워크에 연결
+- 대부분의 시나리오는 `cyber_range` 브리지 네트워크에 연결됩니다.
+- React2Shell 시나리오(`CVE-2025-55182`)는 `security_lab` 네트워크를 사용합니다.
 - 호스트 시스템과 격리되어 안전하게 실행
 - 컨테이너 간 통신은 서비스 이름으로 수행
 
@@ -170,9 +265,14 @@ seo-labs/
 2. **공격 기법**
    - 환경 변수 주입 (Shellshock)
    - OGNL 표현식 주입 (Struts 2)
+   - HTTP PUT·파일 업로드 우회 (Tomcat CVE-2017-12615)
    - JNDI 조회 공격 (Log4Shell)
    - 데이터 바인딩 조작 (Spring4Shell)
-   - 역직렬화 공격 (React2Shell)
+   - SpEL 라우팅 표현식 주입 (Spring Cloud Function CVE-2022-22963)
+   - PHP 프레임워크 요청 객체 조작 (ThinkPHP CVE-2018-20062)
+   - Fastjson autoType·JNDI (CVE-2017-18349)
+   - HTTP 경로 순회 (CVE-2018-7490)
+   - 역직렬화·서버 명령 시뮬레이션 (React2Shell)
 
 3. **방어 방법**
    - 각 취약점의 패치 방법
@@ -219,6 +319,7 @@ seo-labs/
 1. **포트 충돌**:
    - `docker-compose.yml`에서 포트 매핑을 변경하세요
    - 다른 Docker 컨테이너가 같은 포트를 사용 중인지 확인하세요
+   - Vulhub 기반 추가 시나리오(CVE-2017-12615, CVE-2022-22963, CVE-2018-20062, CVE-2017-18349, CVE-2018-7490)는 기본 호스트 포트를 **28080~28085** 등으로 두어 기존 `8080` 매핑과 겹치지 않게 했습니다.
 
 2. **빌드 실패**:
    - Docker 이미지 캐시를 정리: `docker system prune -a`
@@ -242,9 +343,15 @@ seo-labs/
 - [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228)
 - [CVE-2022-22965](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-22965)
 - [CVE-2025-55182](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-55182)
+- [CVE-2017-12615](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-12615)
+- [CVE-2022-22963](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-22963)
+- [CVE-2018-20062](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-20062)
+- [CVE-2017-18349](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-18349)
+- [CVE-2018-7490](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7490)
 
 ### 관련 문서
 - 각 취약점 폴더의 `README.md` 파일
+- [Vulhub 기반 시나리오 출처·라이선스](VULHUB-ATTRIBUTION.md)
 - Docker 공식 문서: https://docs.docker.com/
 - Docker Compose 문서: https://docs.docker.com/compose/
 
@@ -258,7 +365,8 @@ seo-labs/
 
 ## 📄 라이선스
 
-이 프로젝트는 교육 목적으로 제공되며, 각 취약점의 원본 소프트웨어는 해당 라이선스를 따릅니다.
+이 프로젝트는 교육 목적으로 제공되며, 각 취약점의 원본 소프트웨어는 해당 라이선스를 따릅니다.  
+Vulhub에서 이식한 시나리오는 [VULHUB-ATTRIBUTION.md](VULHUB-ATTRIBUTION.md)의 MIT 라이선스 안내를 따릅니다.
 
 ---
 
